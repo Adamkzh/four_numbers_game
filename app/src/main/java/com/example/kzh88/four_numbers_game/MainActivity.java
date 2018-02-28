@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * already entered string
      */
     private String existedText = "";
-
+    private int[] numberStore = new int[4];
+    private int max = 9, min = 0;
 
 
     @Override
@@ -112,28 +113,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ac_btn.setOnClickListener(this);
     }
 
+    /***
+     * generate random number array
+     */
+    private void randomGenerator(int min, int max){
+        for(int i = 0; i < 4; i++){
+            numberStore[i] = (int)(Math.random() * ((max - min) + 1)) + min;
+        }
+    }
+
+
     /**
      * 点击事件
      * @param v  点击的控件
      */
     @Override
     public void onClick(View v) {
-
+        randomGenerator(min,max);
         switch (v.getId()){
             /**
              * numbers
              */
             case R.id.random_one:
-                existedText = isOverRange(existedText,"0");
+                existedText = isOverRange(existedText,Integer.toString(numberStore[0]));
                 break;
             case R.id.random_two:
-                existedText = isOverRange(existedText,"1");
+                existedText = isOverRange(existedText,Integer.toString(numberStore[1]));
                 break;
             case R.id.random_three:
-                existedText = isOverRange(existedText,"2");
+                existedText = isOverRange(existedText,Integer.toString(numberStore[2]));
                 break;
             case R.id.random_four:
-                existedText = isOverRange(existedText,"3");
+                existedText = isOverRange(existedText,Integer.toString(numberStore[3]));
                 break;
 
             /**
