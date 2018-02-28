@@ -44,6 +44,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int[] numberStore = new int[4];
     private int max = 9, min = 0;
 
+    /**
+     *
+     * Four numbers
+     */
+
+    private String one  = "";
+    private String two = "";
+    private String three = "";
+    private String four = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +121,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         delete.setOnClickListener(this);
         ac_btn.setOnClickListener(this);
+
+        //generate 4 numbers at start
+        randomGenerator(min,max);
+
+        one = Integer.toString(numberStore[0]);
+        two = Integer.toString(numberStore[1]);
+        three = Integer.toString(numberStore[2]);
+        four = Integer.toString(numberStore[3]);
+
+        num0.setText(one);
+        num1.setText(two);
+        num2.setText(three);
+        num3.setText(four);
+
     }
 
     /***
@@ -129,22 +153,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onClick(View v) {
-        randomGenerator(min,max);
+
         switch (v.getId()){
             /**
              * numbers
              */
             case R.id.random_one:
-                existedText = isOverRange(existedText,Integer.toString(numberStore[0]));
+                existedText = isAllowed(existedText,one);
                 break;
             case R.id.random_two:
-                existedText = isOverRange(existedText,Integer.toString(numberStore[1]));
+                existedText = isAllowed(existedText,Integer.toString(numberStore[1]));
                 break;
             case R.id.random_three:
-                existedText = isOverRange(existedText,Integer.toString(numberStore[2]));
+                existedText = isAllowed(existedText,Integer.toString(numberStore[2]));
                 break;
             case R.id.random_four:
-                existedText = isOverRange(existedText,Integer.toString(numberStore[3]));
+                existedText = isAllowed(existedText,Integer.toString(numberStore[3]));
                 break;
 
             /**
@@ -298,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.ac_btn:
-                existedText = "0";
+                existedText = "";
                 break;
         }
         /**
@@ -364,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 超过不做任何操作
      * 没超过可以再添数字
      */
-    private String isOverRange(String existedText, String s) {
+    private String isAllowed(String existedText, String s) {
         return existedText + s;
     }
 
