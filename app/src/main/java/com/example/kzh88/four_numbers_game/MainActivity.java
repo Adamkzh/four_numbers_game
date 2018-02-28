@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *
      * Four numbers
      */
-
     private String one  = "";
     private String two = "";
     private String three = "";
@@ -307,15 +306,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
              */
 
             case R.id.delete_btn:
-                /**
-                 * 字符串长度大于 0 时才截取字符串
-                 * 如果长度为 1，则直接把字符串设置为 0
-                 */
+
                 if (existedText.equals("error")){
-                    existedText = "0";
+                    existedText = "";
                 } else if (existedText.length() > 0){
                     if (existedText.length() == 1) {
-                        existedText = "0";
+                        existedText = "";
                     } else {
                         existedText = existedText.substring(0,existedText.length()-1);
                     }
