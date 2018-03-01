@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *
      * Four numbers
      */
-    private String one  = "";
-    private String two = "";
-    private String three = "";
-    private String four = "";
+    private String one;
+    private String two ;
+    private String three ;
+    private String four ;
 
     /**
      *
@@ -221,13 +221,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (existedText.equals("error")){
                     existedText = "";
                 } else if (existedText.length() > 0){
-                        if(existedText.charAt(existedText.length()-1)+"" == one){
+                    String cur;
+                    if(existedText.length() > 1  &&  Character.isDigit(existedText.charAt(existedText.length()-2))){
+                        cur = existedText.substring(existedText.length() - 2, existedText.length());
+                        existedText = existedText.substring(0,existedText.length()-1);
+                    }else{
+                        cur =  existedText.substring(existedText.length()-1);
+                    }
+                        if( cur.equals(one)){
                             oneClickable = true;
-                        }else if(existedText.charAt(existedText.length()-1)+"" == two){
+                        }else if(cur.equals(two)){
                             twoClickable = true;
-                        }else if(existedText.charAt(existedText.length()-1)+"" == three){
+                        }else if(cur.equals(three)){
                             threeClickable = true;
-                        }else if(existedText.charAt(existedText.length()-1)+"" == four){
+                        }else if(cur.equals(four)){
                             fourClickable = true;
                         }
                         existedText = existedText.substring(0,existedText.length()-1);
