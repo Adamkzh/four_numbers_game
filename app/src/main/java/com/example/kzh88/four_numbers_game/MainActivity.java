@@ -53,6 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String three = "";
     private String four = "";
 
+    /**
+     *
+     * number already clicked
+     */
+    private boolean oneClickable = true;
+    private boolean twoClickable = true;
+    private boolean threeClickable = true;
+    private boolean fourClickable = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,16 +168,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
              * numbers
              */
             case R.id.random_one:
-                existedText = isAllowed(existedText,one);
+                if(oneClickable){
+                    existedText = isAllowed(existedText,one);
+                    oneClickable = false;
+                }
                 break;
             case R.id.random_two:
-                existedText = isAllowed(existedText,Integer.toString(numberStore[1]));
+                if(twoClickable){
+                    existedText = isAllowed(existedText,two);
+                    twoClickable = false;
+                }
                 break;
             case R.id.random_three:
-                existedText = isAllowed(existedText,Integer.toString(numberStore[2]));
+                if(threeClickable){
+                    existedText = isAllowed(existedText,three);
+                    threeClickable = false;
+                }
                 break;
             case R.id.random_four:
-                existedText = isAllowed(existedText,Integer.toString(numberStore[3]));
+                if(fourClickable){
+                    existedText = isAllowed(existedText,four);
+                    fourClickable = false;
+                }
                 break;
 
             /**
@@ -201,11 +221,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (existedText.equals("error")){
                     existedText = "";
                 } else if (existedText.length() > 0){
-                    if (existedText.length() == 1) {
-                        existedText = "";
-                    } else {
+                        if(existedText.charAt(existedText.length()-1)+"" == one){
+                            oneClickable = true;
+                        }else if(existedText.charAt(existedText.length()-1)+"" == two){
+                            twoClickable = true;
+                        }else if(existedText.charAt(existedText.length()-1)+"" == three){
+                            threeClickable = true;
+                        }else if(existedText.charAt(existedText.length()-1)+"" == four){
+                            fourClickable = true;
+                        }
                         existedText = existedText.substring(0,existedText.length()-1);
-                    }
                 }
                 break;
             case R.id.ac_btn:
