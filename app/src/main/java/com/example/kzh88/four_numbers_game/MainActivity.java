@@ -3,7 +3,7 @@ package com.example.kzh88.four_numbers_game;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-
+import java.util.*;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -213,11 +213,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.right_bracket_btn:
                 existedText = isAllowed(existedText,")");
                 break;
+
+            //check
             case R.id.check:
                 existedText = getResult();
+                System.out.print(getResult());
                 break;
-            case R.id.delete_btn:
 
+             //delete
+            case R.id.delete_btn:
                 if (existedText.equals("error")){
                     existedText = "";
                 } else if (existedText.length() > 0){
@@ -242,6 +246,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.ac_btn:
                 existedText = "";
+                oneClickable = true;
+                twoClickable = true;
+                threeClickable = true;
+                fourClickable = true;
+
                 break;
         }
         /**
@@ -257,9 +266,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @return  return result
      */
     private String getResult() {
-
-        String tempResult = "";
-        return tempResult;
+        String s = existedText;
+        if (s == null || s.length() == 0) {
+            return "0";
+        }
+        // initialize operator
+        char sign = '+';
+        Deque<Long> stack1 = new LinkedList<>(); // store digit and '('
+        Deque<Character> stack2 = new LinkedList<>(); // store sign before '('
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (Character.isDigit(ch)) {
+                long num = 0;
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + s.charAt(i++) - '0';
+                }
+                i--;
+                stack1.offerFirst(eval(sign, stack1, num));
+            } else if (ch == ' ') {
+                continue;
+            } else if (ch == '(') {
+                stack1.offerFirst(Long.MAX_VALUE);
+                stack2.offerFirst(sign);
+                sign = '+';
+            } else if (ch == ')') {
+                long num = 0;
+                while (stack1.peekFirst() != Long.MAX_VALUE) {
+                    num += stack1.pollFirst();
+                }
+                stack1.pollFirst(); // pop out '(' (Long.MAX_VALUE)
+                char operator = stack2.pollFirst();
+                stack1.offerFirst(eval(operator, stack1, num));
+            } else {
+                sign = ch;
+            }
+        }
+        // what we need to do is just sum up all num in stack
+        int result = 0;
+        while (!stack1.isEmpty()) {
+            result += stack1.pollFirst();
+        }
+        return Integer.toString(result);
+    }
+    private long eval(char sign, Deque<Long> stack1, long num) {
+        if (sign == '+') {
+            return num;
+        } else if (sign == '-') {
+            return -num;
+        } else if (sign == '×') {
+            return stack1.pollFirst() * num;
+        } else {
+            return stack1.pollFirst() / num;
+        }
     }
 
     private String isAllowed(String existedText, String s) {
