@@ -130,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ac_btn.setOnClickListener(this);
         left_bracket.setOnClickListener(this);
         right_bracket.setOnClickListener(this);
+        gameInit();
+
+    }
+
+    private void gameInit(){
 
         //generate 4 numbers at start
         randomGenerator(min,max);
@@ -143,9 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         num1.setText(two);
         num2.setText(three);
         num3.setText(four);
-
     }
-
     /***
      * generate random number array
      */
@@ -217,7 +220,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //check
             case R.id.check:
                 existedText = getResult();
-                System.out.print(getResult());
+                if(existedText.equals("24")){
+                    gameInit();
+                }else{
+                    existedText = "error";
+                }
+
                 break;
 
              //delete
